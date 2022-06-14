@@ -8,8 +8,8 @@ const CardSchema = new Schema({
     required: [true, 'The Card title is required']
   },
   description: String,
-  list: ObjectId,
-  board: ObjectId,
+  listId: ObjectId,
+  boardId: ObjectId,
   labels: [String],
   position: Number,
   actions: [

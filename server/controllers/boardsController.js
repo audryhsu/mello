@@ -8,6 +8,23 @@ const getBoards = (req, res, next) => {
   });
 };
 
+const getBoard = async (req, res, next) => {
+  try {
+    let board = await Board.find({_id: req.params.id})
+    const errors = validationResult(board)
+
+    if (errors.isEmpty()) {
+      res.json(board)
+    }
+    else {
+      return next(new HttpError("Board ID not found.", 404));
+    }
+
+  } catch (err) {
+    next(new HttpError("Query failed, please try again", 500))
+  }
+}
+
 const createBoard = async (req, res, next) => {
   const errors = validationResult(req);
   try {
@@ -29,4 +46,5 @@ const createBoard = async (req, res, next) => {
 };
 
 exports.getBoards = getBoards;
+exports.getBoard = getBoard;
 exports.createBoard = createBoard;
