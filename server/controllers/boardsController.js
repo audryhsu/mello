@@ -8,23 +8,23 @@ const getBoards = (req, res, next) => {
   });
 };
 
-const createBoard = (req, res, next) => {
+const createBoard = async (req, res, next) => {
   const errors = validationResult(req);
-  if (errors.isEmpty()) {
-    Board.create(req.body.board)
-      .then((board) => {
-        res.json({
-          title: board.title,
-          _id: board._id,
-          createdAt: board.createdAt,
-          updatedAt: board.updatedAt,
-        });
-      })
-      .catch((err) =>
-        next(new HttpError("Creating board failed, please try again", 500))
-      );
-  } else {
-    return next(new HttpError("The input field is empty.", 404));
+  try {
+    if (errors.isEmpty()) {
+      let board = await Board.create(req.body.board)
+      res.json({
+        title: board.title,
+        _id: board._id,
+        createdAt: board.createdAt,
+        updatedAt: board.updatedAt,
+      });
+    }
+    else {
+      return next(new HttpError("The input field is empty.", 404));
+    }
+  } catch (err) {
+      next(new HttpError("Creating board failed, please try again", 500))
   }
 };
 
