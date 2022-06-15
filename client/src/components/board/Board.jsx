@@ -35,9 +35,9 @@ const Board = () => {
       <main>
 <div id="list-container" className="list-container">
   <div id="existing-lists" className="existing-lists">
-      {board.lists.map(listId => {
+      {board.lists.map(list => {
         return (
-          <BoardList key={listId} listId={listId}></BoardList>
+          <BoardList key={list._id} list={list}></BoardList>
         )
       })}
   </div>
