@@ -8,6 +8,6 @@ exports.validateList = [
 ];
 
 exports.validateCard = [
-  check('listId').not().isEmpty(),
+  // check('listId').not().isEmpty(),
   check('card.title').not().isEmpty(),
 ];

@@ -7,6 +7,7 @@ const { validationResult } = require('express-validator');
 const createCard = async (req, res, next) => {
   const card = req.body.card;
   const listId = req.body.listId;
+  const boardId = req.body.boardId;
   const errors = validationResult(req);
 
   try {
@@ -18,6 +19,11 @@ const createCard = async (req, res, next) => {
 
       await List.updateOne(
         { _id: listId },
+        { $push: { cards: [newCard._id] } }
+      );
+
+      await Board.updateOne(
+        { _id: boardId },
         { $push: { cards: [newCard._id] } }
       );
       res.json(newCard);
