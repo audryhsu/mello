@@ -17,9 +17,7 @@ const getBoard = async (req, res, next) => {
       },
     });
 
-    console.log('board populate api: ', board);
     const errors = validationResult(board);
-
     if (errors.isEmpty()) {
       res.json(board);
     } else {
