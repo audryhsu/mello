@@ -1,8 +1,22 @@
 import React from 'react'
 import BoardCard from './BoardCard';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCards } from '../../features/cards/cards';
+import { useEffect } from 'react';
+
 
 const BoardList = ({list}) => {
+  const dispatch = useDispatch()
+  const cards = useSelector((state) => state.cards)
+  
+  useEffect(() => {
+    let boardId = list.boardId
+    let listId = list._id
+    dispatch(fetchCards({boardId, listId}))
+  }, [dispatch])
 
+  if (!list || !cards) return null
   return (
     <>
     <div className="list-wrapper">
@@ -21,8 +35,8 @@ const BoardList = ({list}) => {
               <span>...</span>
             </div>
           </div>
-          <div id="cards-container" data-id="list-1-cards">
-            {list.cards.map(card => {
+          <div id="cards-container" data-id="list-1-cards">WIP!!!
+            {cards.map(card => {
               return (
                 <BoardCard key={card._id} cardInfo={card}></BoardCard>
               )
