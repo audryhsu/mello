@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import BoardList from './BoardList'
 import { fetchBoard, fetchBoards } from '../../features/boards/boards';
 import { fetchLists } from '../../features/lists/lists';
+import AddList from "./AddList"
 
 const Board = () => {
   let { id } = useParams()
@@ -16,9 +17,8 @@ const Board = () => {
   
   useEffect(() => {
     dispatch(fetchBoard(id))
-    dispatch(fetchLists(id))
   }, [dispatch, id])
-  
+  console.log("lists component", lists)
   // guards against undefined board during AJAX call
   if (!board || !lists) return null
   return (
@@ -45,6 +45,7 @@ const Board = () => {
         )
       })}
   </div>
+  <AddList></AddList>
 </div>
 </main>
 
