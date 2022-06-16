@@ -10,13 +10,16 @@ const Board = () => {
   const dispatch = useDispatch()
   const boards = useSelector((state) => state.boards)
   const board = boards.find(({_id}) => _id === id)
-  console.log('board found', board)
+  
+  console.log('board', board)
+  
   useEffect(() => {
-    dispatch(fetchBoard(id)) // return board with lists
+    dispatch(fetchBoard(id))
   }, [dispatch, id])
-
-  // guards against
+  
+  // guards against undefined board during AJAX call
   if (!board) return null
+  console.log('board after guard clause', board)
   return (
   <>
   <header>

@@ -22,14 +22,11 @@ const BoardList = ({list}) => {
             </div>
           </div>
           <div id="cards-container" data-id="list-1-cards">
-
-            {/* card components  */}
             {list.cards.map(card => {
               return (
                 <BoardCard key={card._id} cardInfo={card}></BoardCard>
               )
             })}
-
           </div>
           <div className="add-dropdown add-bottom">
             <div className="card">

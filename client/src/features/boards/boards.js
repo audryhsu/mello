@@ -46,7 +46,7 @@ const boardSlice = createSlice({
       const boardsLessNewBoard = state.filter(
         (b) => b._id !== action.payload._id
       );
-
+      console.log('fetch board builder');
       return [...boardsLessNewBoard, action.payload];
     });
   },
