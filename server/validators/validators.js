@@ -7,7 +7,11 @@ exports.validateList = [
   check('boardId').not().isEmpty(),
 ];
 
+exports.validateEditList = [
+  check('title').not().isEmpty(),
+  check('position').not().isEmpty(),
+];
+
 exports.validateCard = [
-  // check('listId').not().isEmpty(),
-  check('card.title').not().isEmpty(),
+  check('listId').not().isEmpty(),
 ];

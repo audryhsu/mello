@@ -1,55 +1,40 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import apiClient from '../../lib/ApiClient';
+import { fetchBoard } from '../boards/boards';
 
 const initialState = [];
 
-export const fetchCards = createAsyncThunk('cards/fetchCards',
-  async (Ids) => {
-    const {boardId, listId} = Ids
-    const board = await apiClient.getBoard(boardId);
-    const parentList = board.lists.find(({_id}) => {
-      return listId === _id
-    })
-    return parentList.cards;
-  });
+export const createCard = createAsyncThunk('cards/createCard', async (args) => {
+  const { newCardPayload, callback } = args;
+  const data = await apiClient.createCard(newCardPayload);
+  if (callback) {
+    callback();
+  }
+  return data;
+});
 
-// export const createCard = createAsyncThunk(
-//   'cards/createCard',
-//   async (newCard, callback) => {
-//     const data = await apiClient.createCard(newCard);
-//     if (callback) {
-//       callback;
-//     }
-//     return data;
-//   }
-// );
-
-// export const fetchCard = createAsyncThunk('cards/fetchCard', async (id) => {
-//   const data = await apiClient.getCard(id);
-//   console.log('data', data);
-//   return data;
-// });
 
 const cardSlice = createSlice({
   name: 'cards',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchCards.fulfilled, (state, action) => {
-      return state.concat(action.payload)
-    })
-    //   builder.addCase(createCard.fulfilled, (state, action) => {
-    //     state.push(action.payload);
-    //   });
-    // // fetching a card object that contains cards and cards properties
-    // builder.addCase(fetchCard.fulfilled, (state, action) => {
-    //   const cardsLessNewCard = state.filter(
-    //     (b) => b._id !== action.payload._id
-    //   );
-    //   // console.log('fetch card builder', cardsLessNewCard, action.payload);
-    //   return [...cardsLessNewCard, action.payload];
-    // });
-  }
+    builder.addCase(fetchBoard.fulfilled, (state, action) => {
+      const newCards = action.payload.lists.reduce((acc, list) => {
+        return acc.concat(list.cards);
+      }, []);
+
+      // filter out cards from card state for this particular board
+      const stateLessNewCards = state.filter(
+        (card) => card.boardId !== action.payload._id
+      );
+      return [...stateLessNewCards, ...newCards];
+    });
+      builder.addCase(createCard.fulfilled, (state, action) => {
+        state.push(action.payload);
+      });
+
+  },
 });
 
 export default cardSlice.reducer;

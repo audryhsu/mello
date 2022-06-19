@@ -1,24 +1,22 @@
-import react from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import BoardList from './BoardList'
-import { fetchBoard, fetchBoards } from '../../features/boards/boards';
-import { fetchLists } from '../../features/lists/lists';
+import { fetchBoard } from '../../features/boards/boards';
 import AddList from "./AddList"
 
 const Board = () => {
-  let { id } = useParams()
+  const { id } = useParams()
   const dispatch = useDispatch()
-  const boards = useSelector((state) => state.boards)
-  const lists = useSelector((state) => state.lists)
+  const boards = useSelector(state => state.boards)
+  const lists = useSelector(state => state.lists)
 
   const board = boards.find(({_id}) => _id === id )
   
   useEffect(() => {
     dispatch(fetchBoard(id))
   }, [dispatch, id])
-  console.log("lists component", lists)
+
   // guards against undefined board during AJAX call
   if (!board || !lists) return null
   return (

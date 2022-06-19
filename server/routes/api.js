@@ -6,6 +6,7 @@ const cardsController = require('../controllers/cardsController');
 const {
   validateBoard,
   validateList,
+  validateEditList,
   validateCard,
 } = require('../validators/validators');
 
@@ -16,6 +17,8 @@ router.get('/boards/:id', boardsController.getBoard);
 router.post('/boards', validateBoard, boardsController.createBoard);
 
 router.post('/lists', validateList, listsController.createList);
+
+router.put('/lists/:id', validateEditList, listsController.editList);
 
 router.post('/cards', validateCard, cardsController.createCard);
 

@@ -34,7 +34,6 @@ const listSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
-      console.log("board", action.payload)
       // list objects only contain title -- don't contain lists
       const lists = action.payload.lists.reduce((acc, list) => {
         //eslint-disable-next-line
@@ -42,21 +41,17 @@ const listSlice = createSlice({
 
         return acc.concat(listWithoutCards);
       }, []);
-      console.log("lists", lists)
       return lists
     })
 
     builder.addCase(createList.fulfilled, (state, action) => {
       state.push(action.payload);
     });
-    // // fetching a list object that contains lists and cards properties
-    // builder.addCase(fetchList.fulfilled, (state, action) => {
-    //   const listsLessNewList = state.filter(
-    //     (b) => b._id !== action.payload._id
-    //   );
-    //   // console.log('fetch list builder', listsLessNewList, action.payload);
-    //   return [...listsLessNewList, action.payload];
-    // });
+
+    builder.addCase(editList.fulfilled, (state, action) => {
+      const listsLessNewList = state.filter(list => list._id !== action.payload._id)
+      return [...listsLessNewList, action.payload]
+    })
   }
 });
 

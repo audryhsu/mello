@@ -41,12 +41,31 @@ const apiClient = {
   },
   createList: async (list) => {
     try {
-      const { data } = await axios.post(routes.CREATE_LIST_URL, list)
+      const { data } = await axios.post(routes.CREATE_LIST_URL, list);
       return data;
     } catch (err) {
-      logError(err)
+      logError(err);
     }
-  }
+  },
+  editList: async (list) => {
+    try {
+      const { data } = await axios.put(
+        `${routes.EDIT_LIST_URL}/${list._id}`,
+        list
+      );
+      return data;
+    } catch (err) {
+      logError(err);
+    }
+  },
+  createCard: async (newCardPayload) => {
+    try {
+      const { data } = await axios.post(routes.CREATE_CARD_URL, newCardPayload);
+      return data;
+    } catch (err) {
+      logError(err);
+    }
+  },
 };
 
 export default apiClient;

@@ -7,7 +7,7 @@ const { validationResult } = require('express-validator');
 const createCard = async (req, res, next) => {
   const card = req.body.card;
   const listId = req.body.listId;
-  const boardId = req.body.boardId;
+
   const errors = validationResult(req);
 
   try {
@@ -17,18 +17,18 @@ const createCard = async (req, res, next) => {
         ...card,
       });
 
-      await List.updateOne(
+      let list = await List.findByIdAndUpdate(
         { _id: listId },
         { $push: { cards: [newCard._id] } }
       );
-
+      let boardId = list.boardId;
       await Board.updateOne(
         { _id: boardId },
         { $push: { cards: [newCard._id] } }
       );
       res.json(newCard);
     } else {
-      return next(new HttpError('The card title field is empty.', 404));
+      return next(new HttpError('List ID field is empty.', 404));
     }
   } catch (err) {
     next(new HttpError('Creating card failed, please try again', 500));
