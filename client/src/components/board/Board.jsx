@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import BoardList from './BoardList'
 import { fetchBoard } from '../../features/boards/boards';
-import AddList from "./AddList"
+import BoardLists from './BoardLists';
 
 const Board = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
   const boards = useSelector(state => state.boards)
-  const lists = useSelector(state => state.lists)
 
   const board = boards.find(({_id}) => _id === id )
   
@@ -18,7 +16,7 @@ const Board = () => {
   }, [dispatch, id])
 
   // guards against undefined board during AJAX call
-  if (!board || !lists) return null
+  if (!board) return null
   return (
   <>
   <header>
@@ -34,18 +32,9 @@ const Board = () => {
      <i className="sub-icon sm-icon"></i>Subscribed
    </div>
  </header>
-      <main>
-<div id="list-container" className="list-container">
-  <div id="existing-lists" className="existing-lists">
-      {lists.map(list => {
-        return (
-          <BoardList key={list._id} list={list}></BoardList>
-        )
-      })}
-  </div>
-  <AddList></AddList>
-</div>
-</main>
+  <main>
+    <BoardLists />
+  </main>
 
  <div className="menu-sidebar">
    <div id="menu-main" className="main slide">
