@@ -13,6 +13,10 @@ export const createCard = createAsyncThunk('cards/createCard', async (args) => {
   return data;
 });
 
+export const editCard = createAsyncThunk('cards/editCard', async (args) => {
+  const { updatedCard, callback } = args;
+})
+
 
 const cardSlice = createSlice({
   name: 'cards',

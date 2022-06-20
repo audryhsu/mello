@@ -14,7 +14,7 @@ const BoardList = ({list, activeListId, setActiveListId }) => {
 
   return (
     <>
-    <div className={ listWrapperClass } onClick={ () => setActiveListId(list._id) }>
+    <div className={ listWrapperClass } >
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
@@ -30,7 +30,7 @@ const BoardList = ({list, activeListId, setActiveListId }) => {
           </div>
           <CardsContainer list={list}/>
           <AddCardForm listId={list._id} activeListId={activeListId} setActiveListId={setActiveListId}/>
-          <div className="add-card-toggle" data-position="bottom">
+          <div className="add-card-toggle" data-position="bottom" onClick={ () => setActiveListId(list._id) }>
             Add a card...
           </div>
         </div>

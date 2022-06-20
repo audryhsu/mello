@@ -10,15 +10,15 @@ const BoardLists = () => {
   if (!lists) return null
   return (
     <div id="list-container" className="list-container">
-  <div id="existing-lists" className="existing-lists">
-    {lists.map(list => {
-      return (
-        <BoardList key={list._id} list={list} activeListId={activeListId} setActiveListId={setActiveListId}></BoardList>
-      )
-    })}
-  </div>
-  <AddList></AddList>
-</div>
+      <div id="existing-lists" className="existing-lists">
+        {lists.map(list => {
+          return (
+            <BoardList key={list._id} list={list} activeListId={activeListId} setActiveListId={setActiveListId}></BoardList>
+          )
+        })}
+      </div>
+      <AddList/>
+    </div>
   )
 }
 

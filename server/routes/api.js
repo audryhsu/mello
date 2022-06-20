@@ -8,6 +8,7 @@ const {
   validateList,
   validateEditList,
   validateCard,
+  validateEditCard,
 } = require('../validators/validators');
 
 router.get('/boards', boardsController.getBoards);
@@ -21,5 +22,7 @@ router.post('/lists', validateList, listsController.createList);
 router.put('/lists/:id', validateEditList, listsController.editList);
 
 router.post('/cards', validateCard, cardsController.createCard);
+
+router.put('/cards/:id', validateEditCard, cardsController.editCard);
 
 module.exports = router;

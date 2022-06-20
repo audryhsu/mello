@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchBoard } from '../../features/boards/boards';
+import BoardHeader from './BoardHeader';
 import BoardLists from './BoardLists';
 
 const Board = () => {
@@ -20,18 +21,8 @@ const Board = () => {
   return (
   <>
   <header>
-   <ul>
-     <li id="title">{board.title}</li>
-     <li className="star-icon icon"></li>
-     <li className="private private-icon icon">Private</li>
-   </ul>
-   <div className="menu">
-     <i className="more-icon sm-icon"></i>Show Menu
-   </div>
-   <div className="subscribed">
-     <i className="sub-icon sm-icon"></i>Subscribed
-   </div>
- </header>
+    <BoardHeader boardTitle={board.title} />
+  </header>
   <main>
     <BoardLists />
   </main>
