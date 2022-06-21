@@ -45,7 +45,7 @@ const editCard = async (req, res, next) => {
   try {
     if (errors.isEmpty()) {
       // const oldCard = await Card.findById(cardId);
-      const newCard = await Card.updateOne({_id: cardId}, {...cardEdit})
+      const newCard = await Card.findOneAndUpdate({_id: cardId}, {...cardEdit})
       console.log("cardEdit:", cardEdit,
       "\nnewCard:", newCard)
       
