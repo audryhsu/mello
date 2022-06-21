@@ -1,9 +1,11 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 
 const BoardCard = ({cardInfo}) => {
+  
   return (
     <div className="card-background">
+      <Link to={`/cards/${cardInfo._id}`}>
       <div className="card ">
         <i className="edit-toggle edit-icon sm-icon"></i>
         <div className="card-info">
@@ -15,7 +17,6 @@ const BoardCard = ({cardInfo}) => {
           <div className="card-label purple colorblindable"></div>
           <p>
             {cardInfo.title}
-            {cardInfo.description}
           </p>
         </div>
         <div className="card-icons">
@@ -28,6 +29,7 @@ const BoardCard = ({cardInfo}) => {
           <i className="comment-icon sm-icon"></i>
         </div>
       </div>
+      </Link>
     </div>
   );
 };

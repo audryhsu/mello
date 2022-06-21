@@ -12,20 +12,23 @@ const createCard = async (req, res, next) => {
 
   try {
     if (errors.isEmpty()) {
+      let list = await List.findById(listId);
+      let boardId = list.boardId;
+
       const newCard = await Card.create({
         listId,
+        boardId,
         ...card,
       });
 
-      let list = await List.findByIdAndUpdate(
-        { _id: listId },
-        { $push: { cards: [newCard._id] } }
-      );
-      let boardId = list.boardId;
+      list.cards.push(newCard);
+      await list.save();
+
       await Board.updateOne(
         { _id: boardId },
         { $push: { cards: [newCard._id] } }
       );
+
       res.json(newCard);
     } else {
       return next(new HttpError('List ID field is empty.', 404));
@@ -38,17 +41,19 @@ const createCard = async (req, res, next) => {
 const editCard = async (req, res, next) => {
   const cardEdit = req.body.card;
   const cardId = req.params.id;
-  
+
   const errors = validationResult(req);
-  console.log(errors);
-  
+
   try {
     if (errors.isEmpty()) {
-      // const oldCard = await Card.findById(cardId);
-      const newCard = await Card.findOneAndUpdate({_id: cardId}, {...cardEdit})
-      console.log("cardEdit:", cardEdit,
-      "\nnewCard:", newCard)
-      
+      const newCard = await Card.findOneAndUpdate(
+        { _id: cardId },
+        { ...cardEdit },
+        {
+          new: true,
+        }
+      );
+
       res.json(newCard);
     } else {
       next(new HttpError('Validation errors; missing payload field.', 404));
@@ -56,7 +61,18 @@ const editCard = async (req, res, next) => {
   } catch (err) {
     next(new HttpError('Edit card failed', 500));
   }
-}
+};
+const fetchCard = async (req, res, next) => {
+  const cardId = req.params.id;
+
+  try {
+    const card = await Card.findById(cardId);
+    res.json(card);
+  } catch (err) {
+    next(new HttpError('Fetch card failed', 500));
+  }
+};
 
 exports.createCard = createCard;
 exports.editCard = editCard;
+exports.fetchCard = fetchCard;

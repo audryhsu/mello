@@ -10,7 +10,7 @@ const ListSchema = new Schema({
   position: {
     type: Number
   },
-  boardId: ObjectId,
+  boardId: {type: Schema.Types.ObjectId, ref: 'Board'},
   cards:[
     {type: Schema.Types.ObjectId, ref: 'Card'}
   ]

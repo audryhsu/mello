@@ -6,7 +6,6 @@ import CardsContainer from './CardsContainer';
 import AddCardForm from './AddCardForm';
 
 // TODO: edit position of list 
-// TODO: refactor component into more smaller components (e.g. list wrapper from list)
 
 const BoardList = ({list, activeListId, setActiveListId }) => {
   if (!list) return null

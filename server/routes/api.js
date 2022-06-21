@@ -21,6 +21,8 @@ router.post('/lists', validateList, listsController.createList);
 
 router.put('/lists/:id', validateEditList, listsController.editList);
 
+router.get('/cards/:id', cardsController.fetchCard);
+
 router.post('/cards', validateCard, cardsController.createCard);
 
 router.put('/cards/:id', validateEditCard, cardsController.editCard);

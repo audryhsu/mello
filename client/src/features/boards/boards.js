@@ -21,7 +21,6 @@ export const createBoard = createAsyncThunk(
 
 export const fetchBoard = createAsyncThunk('boards/fetchBoard', async (id) => {
   const data = await apiClient.getBoard(id);
-  console.log('data', data);
   return data;
 });
 

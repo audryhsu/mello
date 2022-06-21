@@ -1,20 +1,35 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { fetchBoard } from '../../features/boards/boards';
 import BoardHeader from './BoardHeader';
 import BoardLists from './BoardLists';
 
 const Board = () => {
-  const { id } = useParams()
+  const locationArr = useLocation().pathname.split('/')
+  const { id } = useParams() // board id or card id depending on route
+  const cards = useSelector(state => state.cards)
+  let boardId;
+  
+  if (locationArr.includes('boards')) {
+    boardId = id
+  } else {
+    let card = cards.find(card => card._id === id)
+    boardId = card ? card.boardId : null
+
+  }
+
   const dispatch = useDispatch()
   const boards = useSelector(state => state.boards)
 
-  const board = boards.find(({_id}) => _id === id )
+  const board = boards.find(({_id}) => _id === boardId )
   
   useEffect(() => {
-    dispatch(fetchBoard(id))
-  }, [dispatch, id])
+    if (boardId) {
+      dispatch(fetchBoard(boardId))
+    }
+
+  }, [dispatch, boardId])
 
   // guards against undefined board during AJAX call
   if (!board) return null
