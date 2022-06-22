@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import CardLabelsBoardCard from "./CardLabelsBoardView";
 
 const BoardCard = ({cardInfo}) => {
   
@@ -9,12 +10,7 @@ const BoardCard = ({cardInfo}) => {
       <div className="card ">
         <i className="edit-toggle edit-icon sm-icon"></i>
         <div className="card-info">
-          <div className="card-label green colorblindable"></div>
-          <div className="card-label yellow colorblindable"></div>
-          <div className="card-label red colorblindable"></div>
-          <div className="card-label orange colorblindable"></div>
-          <div className="card-label blue colorblindable"></div>
-          <div className="card-label purple colorblindable"></div>
+          <CardLabelsBoardCard labels={cardInfo.labels}/>
           <p>
             {cardInfo.title}
           </p>

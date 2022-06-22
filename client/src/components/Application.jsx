@@ -14,7 +14,7 @@ import LabelsPopover from "./ui/LabelsPopover";
 import MoveCardPopover from "./ui/MoveCardPopover";
 import SingleBoard from "./ui/SingleBoard";
 import Board from "./board/Board";
-import Card from "./board/Card";
+import Card from "./card/Card";
 
 const Application = () => {
   return (
