@@ -24,7 +24,7 @@ const LabelsPopover = ({setLabelsPopoverVis, labels}) => {
           />
           <div className="labels-search-results">
             <ul className="label-list">
-              {colors.map((color, ind) => <LabelsPopoverLabel key={ind} color={color} labels={labels}/>)}
+              {colors.map((color, ind) => <LabelsPopoverLabel key={ind} index={ind} color={color} labels={labels}/>)}
             </ul>
             <ul className="light-list">
               <li className="not-implemented">Create a new label</li>

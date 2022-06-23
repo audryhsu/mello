@@ -1,11 +1,36 @@
-const LabelsPopoverLabel = ({labels, color, key}) => {
+import { useDispatch } from "react-redux"
+import { useParams } from "react-router-dom"
+import { editCard } from "../../features/cards/cards"
+
+const LabelsPopoverLabel = ({labels, color, ind }) => {
+  const dispatch = useDispatch()
+  const selected = labels.includes(color)
+  const {id} = useParams()
+
   const topDivClass = `${color} colorblindable`
-  const topDivDataId = `${key}`
+  const topDivDataId = `${ind}`
   const labelBackgroundClass = `label-background ${color}`
+  
+  const handleSelectLabel = () => {
+    if (selected) {
+      labels = labels.filter(label => label !== color)
+    } else {
+      labels = labels.concat(color)  
+    }
+    dispatch(editCard({
+      cardId: id,
+      updatedCard: {
+        card: { labels }
+      }
+    }))
+  } 
   return (
         <li>
-          <div className={topDivClass} data-id={topDivDataId}>
-            <i className="check-icon sm-icon"></i>
+          <div className={topDivClass} data-id={topDivDataId} onClick={ handleSelectLabel }>
+            { selected ?
+              (<i className="check-icon sm-icon"></i>) :
+              null
+            }
           </div>
           <div className={labelBackgroundClass}></div>
           <div className="label-background-overlay"></div>

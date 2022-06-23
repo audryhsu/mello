@@ -29,11 +29,11 @@ const CardDescription = ({card}) => {
       <p>Description</p>
       { editDescriptionVisible ? 
         (
-          <><textarea class="textarea-toggle" rows="1"
+          <><textarea className="textarea-toggle" rows="1"
             onChange={(e) => setCardDescription(e.target.value) }
             value= { textAreaVal }
           ></textarea>
-          <div><div class="button" value="Save"
+          <div><div className="button" value="Save"
           onClick={ handleSaveDescription }>Save</div>
           <i className="x-icon icon" onClick={ handleCancelEditDescription }></i></div></>
         ) : 

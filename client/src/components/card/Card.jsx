@@ -8,15 +8,17 @@ import CardDescription from "./CardDescription";
 import CardLabels from "./CardLabels";
 import CardSidebar from "./CardSidebar";
 import LabelsPopover from "./LabelsPopover";
+import CommentForm from "./CommentForm";
 
 const Card = () => {
   const dispatch = useDispatch()
   const { id } = useParams();
   const cards = useSelector((state) => state.cards)
   const [labelsPopoverVis, setLabelsPopoverVis] = useState(false)
+  const [popover, setPopover] = useState({type: '', attachedTo: "", visible: false})
   
   let card = cards.find(card => card._id === id)
-  console.log('card found', card)
+  // console.log('card found', card)
 
   useEffect(() => {
     dispatch(fetchCard({id}))
@@ -33,8 +35,7 @@ const Card = () => {
         </Link>
         <header>
           <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }}>
-            {card.title}
+          <textarea className="list-title" style={{ height: "45px" }} value={card.title}>
           </textarea>
           <p>
             in list <a className="link">Stuff to try (this is a list)</a>
@@ -45,7 +46,7 @@ const Card = () => {
           <ul className="modal-outer-list">
             <li className="details-section">
               <ul className="modal-details-list">
-                <CardLabels card={card} />
+                <CardLabels card={card} setLabelsPopoverVis={ setLabelsPopoverVis }/>
                 <li className="due-date-section">
                   <h3>Due Date</h3>
                   <div id="dueDateDisplay" className="overdue completed">
@@ -54,6 +55,7 @@ const Card = () => {
                       type="checkbox"
                       className="checkbox"
                       checked=""
+                      onChange={() => null}
                       />
                     Aug 4 at 10:42 AM <span>(past due)</span>
                   </div>
@@ -61,36 +63,7 @@ const Card = () => {
               </ul>
               <CardDescription card={card}/>
             </li>
-            <li className="comment-section">
-              <h2 className="comment-icon icon">Add Comment</h2>
-              <div>
-                <div className="member-container">
-                  <div className="card-member">TP</div>
-                </div>
-                <div className="comment">
-                  <label>
-                    <textarea
-                      required=""
-                      rows="1"
-                      placeholder="Write a comment..."
-                      ></textarea>
-                    <div>
-                      <a className="light-button card-icon sm-icon"></a>
-                      <a className="light-button smiley-icon sm-icon"></a>
-                      <a className="light-button email-icon sm-icon"></a>
-                      <a className="light-button attachment-icon sm-icon"></a>
-                    </div>
-                    <div>
-                      <input
-                        type="submit"
-                        className="button not-implemented"
-                        value="Save"
-                        />
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </li>
+            <CommentForm />
             <li className="activity-section">
               <h2 className="activity-icon icon">Activity</h2>
               <ul className="horiz-list">
@@ -125,6 +98,7 @@ const Card = () => {
                           type="submit"
                           className="button not-implemented"
                           value="Save"
+                          onChange={() => null}
                           />
                         <i className="x-icon icon"></i>
                       </div>
@@ -168,6 +142,7 @@ const Card = () => {
                           type="submit"
                           className="button not-implemented"
                           value="Save"
+                          onChange={() => null}
                           />
                         <i className="x-icon icon"></i>
                       </div>
@@ -181,6 +156,7 @@ const Card = () => {
         <CardSidebar setLabelsPopoverVis={setLabelsPopoverVis}/>        
       </div>
     </div>
+      <Popover {...popover}>{popoverChildren()}</Popover>
       { labelsPopoverVis ? <LabelsPopover labels={card.labels} setLabelsPopoverVis={setLabelsPopoverVis} /> : null }
       </>
 
