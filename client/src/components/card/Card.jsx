@@ -12,6 +12,7 @@ import CommentForm from "./CommentForm";
 import DueDatePopover from "./DueDatePopover"
 import Popover from "../shared/Popover";
 import CardDueDate from "./CardDueDate"
+import CardTitle from "./CardTitle";
 
 const Card = () => {
   const dispatch = useDispatch()
@@ -48,9 +49,7 @@ const Card = () => {
           <i className="x-icon icon close-modal" ></i>
         </Link>
         <header>
-          <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }} value={card.title}>
-          </textarea>
+          <CardTitle title={card.title}/>          
           <p>
             in list <a className="link">Stuff to try (this is a list)</a>
             <i className="sub-icon sm-icon"></i>
