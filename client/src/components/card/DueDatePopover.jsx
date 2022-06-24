@@ -1,11 +1,19 @@
 import React from "react";
 import Pikaday from "pikaday";
 import moment from "moment";
+import { useRef, useCallback, useEffect } from "react";
+import { useState } from "react";
+import { editCard } from "../../features/cards/cards";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
-const DueDateForm = (props) => {
+const DueDatePopover = (props) => {
+    const {id} = useParams()
     const dateInput = useRef(null);
     const calendar = useRef(null);
-  
+    // const [formDate, setFormDate ] = useState("")
+    const dispatch = useDispatch()
+
     const defaultMoment = useCallback(() => {
       if (props.dueDate) {
         return moment(props.dueDate);
@@ -27,6 +35,7 @@ const DueDateForm = (props) => {
     }, [defaultMoment]);
   
     useEffect(() => {
+      console.log("useEffect in duedate pop")
       const picker = new Pikaday({
         field: dateInput.current,
         bound: false,
@@ -71,14 +80,36 @@ const DueDateForm = (props) => {
       });
       picker.show();
     }, [defaultDate]);
+
+    const handleClose = (e) => {
+      e.preventDefault();
+      props.setPopover({type: "due-date", attachedTo: e.target, visible: false });
+    }
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      dispatch(editCard(
+        {
+        cardId: id,
+        updatedCard: {
+          card: { dueDate: `${e.target.date.value} ${e.target.time.value}`}
+        },
+        // callback: (e)=> handleClose(e)
+      }))
+      
+      handleClose(e)
+    }
+    const handleReset = (e) => {
+      e.preventDefault()
+    }
+
     return (
       <div>
         <header>
           <span>Change due date</span>
-          <a href="#" className="icon-sm icon-close" onClick={props.onClose}></a>
+          <a href="#" className="icon-sm icon-close" onClick={ handleClose }></a>
         </header>
         <div className="content">
-          <form onSubmit={props.onSubmit} onReset={props.onRemove}>
+          <form onSubmit={handleSubmit} onReset={handleReset}>
             <div className="datepicker-select">
               <div className="datepicker-select-date">
                 <label>
@@ -89,6 +120,8 @@ const DueDateForm = (props) => {
                     autoFocus={true}
                     ref={dateInput}
                     defaultValue={defaultMoment().format("M/D/YYYY")}
+                    name="date"
+                    // onSelect={ (e) => setFormDate(e.target.value)}
                   />
                 </label>
               </div>
@@ -98,6 +131,7 @@ const DueDateForm = (props) => {
                   <input
                     type="text"
                     placeholder="Enter time"
+                    name="time"
                     defaultValue={defaultMoment().format("h:mm A")}
                   />
                 </label>
@@ -116,6 +150,4 @@ const DueDateForm = (props) => {
     );
   };
   
-  export default DueDateForm;
-
 export default DueDatePopover;

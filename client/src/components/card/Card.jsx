@@ -9,22 +9,36 @@ import CardLabels from "./CardLabels";
 import CardSidebar from "./CardSidebar";
 import LabelsPopover from "./LabelsPopover";
 import CommentForm from "./CommentForm";
+import DueDatePopover from "./DueDatePopover"
+import Popover from "../shared/Popover";
+import CardDueDate from "./CardDueDate"
 
 const Card = () => {
   const dispatch = useDispatch()
   const { id } = useParams();
   const cards = useSelector((state) => state.cards)
-  const [labelsPopoverVis, setLabelsPopoverVis] = useState(false)
   const [popover, setPopover] = useState({type: '', attachedTo: "", visible: false})
-  
   let card = cards.find(card => card._id === id)
-  // console.log('card found', card)
+  
+  const popoverChildren = () => {
+  const { visible, type } = popover
+
+  if (visible && type) {
+    if (type === "due-date") {
+      return (<DueDatePopover dueDate={card.dueDate} setPopover={setPopover} />)
+    } else  if (type === "labels") {
+      return (<LabelsPopover labels={card.labels} setPopover={setPopover} />)
+    }
+  }
+  
+}
 
   useEffect(() => {
     dispatch(fetchCard({id}))
   },[id, dispatch])
 
   if (!card) return null 
+
   return (
     <>
     <div id="modal-container">
@@ -46,20 +60,9 @@ const Card = () => {
           <ul className="modal-outer-list">
             <li className="details-section">
               <ul className="modal-details-list">
-                <CardLabels card={card} setLabelsPopoverVis={ setLabelsPopoverVis }/>
-                <li className="due-date-section">
-                  <h3>Due Date</h3>
-                  <div id="dueDateDisplay" className="overdue completed">
-                    <input
-                      id="dueDateCheckbox"
-                      type="checkbox"
-                      className="checkbox"
-                      checked=""
-                      onChange={() => null}
-                      />
-                    Aug 4 at 10:42 AM <span>(past due)</span>
-                  </div>
-                </li>
+                <CardLabels card={card} setPopover={ setPopover }/>
+                { card.dueDate ? (<CardDueDate card={card} />) : null }
+                
               </ul>
               <CardDescription card={card}/>
             </li>
@@ -153,13 +156,11 @@ const Card = () => {
             </li>
           </ul>
         </section>
-        <CardSidebar setLabelsPopoverVis={setLabelsPopoverVis}/>        
+        <CardSidebar setPopover={setPopover}/>        
       </div>
     </div>
       <Popover {...popover}>{popoverChildren()}</Popover>
-      { labelsPopoverVis ? <LabelsPopover labels={card.labels} setLabelsPopoverVis={setLabelsPopoverVis} /> : null }
-      </>
-
+    </>
   );
 };
 

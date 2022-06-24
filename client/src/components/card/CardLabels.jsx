@@ -1,9 +1,12 @@
 import CardSingleLabel from "./CardSingleLabel";
 
-const CardLabels = ({card, setLabelsPopoverVis }) => {
+const CardLabels = ({card, setPopover }) => {
   const colors = ["green", "yellow", "orange", "blue", "purple", "red"]
-  const handleShowLabelsPopover = () => {
-    setLabelsPopoverVis(true)
+
+  const handleShowLabelsPopover = (e) => {
+    console.log('target from cardLabels', e.target)
+
+    setPopover({type: "labels", attachedTo: e.target, visible: true})
   }
 
   return (

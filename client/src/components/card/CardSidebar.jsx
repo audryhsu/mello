@@ -1,4 +1,10 @@
-const CardSidebar = ({setLabelsPopoverVis}) => {
+const CardSidebar = ({setPopover}) => {
+  const handleShowLabelPopover = (e) => {
+    setPopover({type: "labels", attachedTo: e.currentTarget, visible: true})
+  }
+  const handleShowDueDatePopover = (e) => {
+    setPopover({type: "due-date", attachedTo: e.currentTarget, visible: true})
+  }
 
   return (
     <aside className="modal-buttons">
@@ -7,13 +13,16 @@ const CardSidebar = ({setLabelsPopoverVis}) => {
         <li className="member-button">
           <i className="person-icon sm-icon"></i>Members
         </li>
-        <li className="label-button" onClick={() => setLabelsPopoverVis(true)}>
+        <li className="label-button"
+          onClick={ handleShowLabelPopover }>
           <i className="label-icon sm-icon"></i>Labels
         </li>
         <li className="checklist-button">
           <i className="checklist-icon sm-icon"></i>Checklist
         </li>
-        <li className="date-button not-implemented">
+        <li className="date-button"
+          onClick={ handleShowDueDatePopover }
+        >
           <i className="clock-icon sm-icon"></i>Due Date
         </li>
         <li className="attachment-button not-implemented">

@@ -3,14 +3,14 @@ import LabelsPopoverLabel from "./LabelsPopoverLabel";
 
 const colors = ["green", "yellow", "orange", "blue", "purple", "red"]
 
-const LabelsPopover = ({setLabelsPopoverVis, labels}) => {
+const LabelsPopover = ({setPopover, labels}) => {
+
   const handleClose = (e) => {
     e.preventDefault();
-    setLabelsPopoverVis(false);
+    setPopover({type: "labels", attachedTo: e.target, visible: false });
   }
 
   return (
-    <div className="popover labels">
       <div id="add-options-labels-dropdown">
         <header>
           <span>Labels</span>
@@ -36,7 +36,6 @@ const LabelsPopover = ({setLabelsPopoverVis, labels}) => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

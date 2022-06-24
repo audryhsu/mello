@@ -106,26 +106,7 @@ class Popover extends React.Component {
     window.removeEventListener("resize", this.debounceSetLocation);
     this.debounceSetLocation.clear();
   };
-// type, attachedTo, visible - pass three props 
-// attachedTo = e.target
-// type = "due-date" or "labels"
 
-// Popover can wrap child components
-
-/*
-<Provider><App></Provider>
-
-<Popover type="", attachedTo="", visible=false>popoverChildren()><</Popover>
-
-const popoverChildren = () => {
-  if visible && type {
-    if (type === "due-date") {
-      return (<DueDate>)
-    } else  if (type === "label") {
-      return (<Labels>)
-    }  }
-}
-*/
   render() {
     if (this.props.visible) {
       return (
