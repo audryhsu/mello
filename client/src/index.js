@@ -6,14 +6,16 @@ import store from "./lib/Store";
 import Application from "./components/Application";
 import "./index.scss"
 
+
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
     <Provider store={store}>
-      <Router>
-        <Application />
-      </Router>
+      {/* <DndProvider backend={HTML5Backend} > */}
+        <Router>
+          <Application />
+        </Router>
+        {/* </DndProvider>, */}
     </Provider>,
     document.body.appendChild(document.createElement("div"))
   );
 });
-

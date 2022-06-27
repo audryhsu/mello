@@ -6,13 +6,15 @@ import UISection from "./ui/UISection";
 import AllBoards from "./ui/AllBoards";
 import CardArchived from "./ui/CardArchived";
 import CardEditingDescription from "./ui/CardEditingDescription";
-import Card from "./ui/Card";
+// import Card from "./ui/Card";
 import CopyCardPopover from "./ui/CopyCardPopover";
 import CreateBoard from "./ui/CreateBoard";
 import DueDatePopover from "./ui/DueDatePopover";
 import LabelsPopover from "./ui/LabelsPopover";
 import MoveCardPopover from "./ui/MoveCardPopover";
 import SingleBoard from "./ui/SingleBoard";
+import Board from "./board/Board";
+import Card from "./card/Card";
 
 const Application = () => {
   return (
@@ -33,6 +35,9 @@ const Application = () => {
       <Route path="/ui/labelsPopover" component={LabelsPopover} />
       <Route path="/ui/moveCardPopover" component={MoveCardPopover} />
       <Route path="/ui/singleBoard" component={SingleBoard} />
+      <Route path="/boards/:id" component={Board} />
+      <Route path="/cards/:id" component={Card} />
+      <Route path="/cards/:id" component={Board} />
     </div>
   );
 };
