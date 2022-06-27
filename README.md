@@ -1,4 +1,4 @@
-# Reaction App
+# App
 
 ## DataBase Setup
 
