@@ -4,6 +4,8 @@ import { useParams, useLocation } from 'react-router-dom';
 import { fetchBoard } from '../../features/boards/boards';
 import BoardHeader from './BoardHeader';
 import BoardLists from './BoardLists';
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 
 const Board = () => {
   const locationArr = useLocation().pathname.split('/')
@@ -35,6 +37,7 @@ const Board = () => {
   if (!board) return null
   return (
   <>
+      <DndProvider backend={HTML5Backend} >
   <header>
     <BoardHeader boardTitle={board.title} />
   </header>
@@ -128,12 +131,9 @@ const Board = () => {
  </div>
  <div id="modal-container"></div>
  <div id="dropdown-container"></div>
+ </DndProvider>
 </>
 );
 };
-/*The component `Board` that will be rendered in response to that route will be responsible for parsing the URL for the id, sending a request to `/api/boards/:id`, dispatching an action to the store and render the board.
-
-Create an action `fetchBoard` in `features/boards/board.js`. This will return an async (functional) action you'll dispatch to the store from the `Board` component (inside useEffect).
- */
 
 export default Board;
