@@ -1,19 +1,20 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux";
 
-const CommentForm = () => {
+const CommentForm = ({card}) => {
   const [comment, setComment] = useState("")
+  const dispatch = useDispatch()
+
   const handleSubmitComment = (e) => {
     e.preventDefault()
-    return null
+    dispatch(createComment({
+      cardId: card._id,
+      comment: {
+        text: comment
+      },
+    }))
   }
-  /*
-  TODO: POST request to submit comment
-  {
-  "cardId": 9,
-  "comment": {
-    "text": "This is my comment"
-  }
-} */
+
   return (
     <li className="comment-section">
     <h2 className="comment-icon icon">Add Comment</h2>
